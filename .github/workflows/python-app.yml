@@ -28,12 +28,13 @@ jobs:
         mysql root password: ${{ secrets.RootPassword }} # Required if "mysql user" is empty, default is empty. The root superuser password
         #mysql user: 'apel' # Required if "mysql root password" is empty, default is empty. The superuser for the specified database. Can use secrets, too
         #mysql password: ${{ secrets.DatabasePassword }} # Required if "mysql user" exists. The password for the "mysql user"
-    - name: Install dependencies
+    #- name: Install dependencies
       run: |
-        sudo apt-get install MySQL-python python-ldap python-iso8601 python-dirq
+        #sudo apt-get install MySQL-python python-ldap python-iso8601 python-dirq
+        #sudo apt-get install python-mysqldb
         python -m pip install --upgrade pip
-        if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
-        if [ -f requirements-test.txt ]; then pip install -r requirements-test.txt; fi
+        if [ -f requirements.txt ]; then pip2 install -r requirements.txt; fi
+        if [ -f requirements-test.txt ]; then pip2 install -r requirements-test.txt; fi
     - name: Setup environment variables
       run: |
         export PYTHONPATH=$PYTHONPATH:`pwd -P`
