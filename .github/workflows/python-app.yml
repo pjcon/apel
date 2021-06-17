@@ -32,6 +32,7 @@ jobs:
       run: |
         #sudo apt-get install MySQL-python python-ldap python-iso8601 python-dirq
         #sudo apt-get install python-mysqldb
+        sudo apt-get install mysql-devel
         python -m pip install --upgrade pip
         if [ -f requirements.txt ]; then pip2 install -r requirements.txt; fi
         if [ -f requirements-test.txt ]; then pip2 install -r requirements-test.txt; fi
