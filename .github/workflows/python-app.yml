@@ -25,6 +25,7 @@ jobs:
         sudo apt-get update
         sudo apt-get install mariadb-server
         sudo systemctl start mariadb
+        sudo journalctl -xe 
 # Secure setup of mariadb required
     - name: Install dependencies
       run: |
