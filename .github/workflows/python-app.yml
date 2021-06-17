@@ -43,6 +43,7 @@ jobs:
     - name: Setup environment variables
       run: |
         export PYTHONPATH=$PYTHONPATH:`pwd -P`
+        ls
         cd test
     - name: Coverage test
       run: |
