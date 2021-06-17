@@ -40,16 +40,20 @@ jobs:
     #    python -m pip install --upgrade pip
     #    if [ -f requirements.txt ]; then pip2 install -r requirements.txt; fi
     #    if [ -f requirements-test.txt ]; then pip2 install -r requirements-test.txt; fi
+    #- name: Setup environment variables
+    #  run: |
+    #    export PYTHONPATH=$PYTHONPATH:`pwd -P`
+    #    ls
+    #    cd test
+    #- name: Coverage test
+    #  run: |
+    #    coverage run --branch --source=apel,bin -m unittest2 discover --buffer
     - name: DEBUG install coverage thangs
-      run: |
-        pip install coverage codecov
-    - name: Setup environment variables
       run: |
         export PYTHONPATH=$PYTHONPATH:`pwd -P`
         ls
         cd test
-    - name: Coverage test
-      run: |
+        pip install coverage codecov unittest2 mock
         coverage run --branch --source=apel,bin -m unittest2 discover --buffer
     - name: Post test summaries
       run: |
