@@ -40,7 +40,7 @@ jobs:
       run: |
         sudo docker ps
     - name: Test connect mysql 2
-      run: sudo mysqladmin -u root -h 127.0.0.1 -P 3306 status
+      run: sudo mysqladmin -u root -h 127.0.0.1 -P 3306 --protocol=tcp status 
     - name: Install dependencies
       run: |
         #sudo apt-get install MySQL-python python-ldap python-iso8601 python-dirq
