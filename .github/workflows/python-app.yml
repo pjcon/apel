@@ -1,0 +1,69 @@
+# This workflow will install Python dependencies, run tests and lint with a single version of Python
+# For more information see: https://help.github.com/actions/language-and-framework-guides/using-python-with-github-actions
+
+name: Python application for the hackathon
+
+on: [push, pull_request]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up Python 3.9
+      uses: actions/setup-python@v2
+      with:
+        python-version: 2.7 #, 3.7
+    - name: Shutdown Ubuntu MySQL (SUDO)
+      run: sudo service mysql stop # Shutdown the Default MySQL, "sudo" is necessary, please not remove it
+    - name: Setup MariaDB
+      uses: getong/mariadb-action@v1.1
+      with:
+        host port: 3306 # Optional, default value is 3306. The port of host
+        container port: 3306 # Optional, default value is 3306. The port of container
+        #character set server: 'utf8' # Optional, default value is 'utf8mb4'. The '--character-set-server' option for mysqld
+        #collation server: 'utf8_general_ci' # Optional, default value is 'utf8mb4_general_ci'. The '--collation-server' option for mysqld
+        #mariadb version: '10.4.10' # Optional, default value is "latest". The version of the MariaDB
+        mariadb version: '10.1.29' # Matching version
+        #mysql database: 'apeldb' # Optional, default value is "test". The specified database which will be create
+        #mysql root password: ${{ secrets.RootPassword }} # Required if "mysql user" is empty, default is empty. The root superuser password
+        #mysql user: 'apel' # Required if "mysql root password" is empty, default is empty. The superuser for the specified database. Can use secrets, too
+        #mysql password: ${{ secrets.DatabasePassword }} # Required if "mysql user" exists. The password for the "mysql user"
+    #- name: Test connect mysql
+    #  run: sudo mysqladmin -u root status
+    - name: check ss 3306
+      run: |
+        sudo ss -ntp
+    - name: docker ps
+      run: |
+        sudo docker ps
+        echo GET NAME
+        id=`sudo docker ps -q`
+        echo LOGS
+        sudo docker logs $id
+        echo IP ADDRESS
+        sudo docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' $id
+    - name: Test connect mysql 2
+      run: sudo mysqladmin -u root -h 172.17.0.3 -P 3306 --protocol=TCP status 
+    - name: Install dependencies
+      run: |
+        #sudo apt-get install MySQL-python python-ldap python-iso8601 python-dirq
+        #sudo apt-get install python-mysqldb
+        #sudo apt-get install mysql-devel
+        # Fix missing my_config.h for MySQL-python
+        sudo wget https://raw.githubusercontent.com/paulfitz/mysql-connector-c/master/include/my_config.h -P /usr/include/mysql/
+        # Fix missing lber.h for python-ldap
+        sudo apt-get install libsasl2-dev libldap2-dev libssl-dev
+        python -m pip install --upgrade pip
+        if [ -f requirements.txt ]; then pip2 install -r requirements.txt; fi
+        if [ -f requirements-test.txt ]; then pip2 install -r requirements-test.txt; fi
+    - name: Install coverage thangs
+      run: |
+        export PYTHONPATH=$PYTHONPATH:`pwd -P`
+        cd test
+        coverage run --branch --source=apel,bin -m unittest2 discover --buffer
+    - name: Post test summaries
+      run: |
+        codecov
