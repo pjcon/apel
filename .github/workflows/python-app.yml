@@ -39,8 +39,12 @@ jobs:
     - name: docker ps
       run: |
         sudo docker ps
+        echo LOGS
+        sudo docker logs mariadb
+        echo IP ADDRESS
+        sudo docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' mariadb
     - name: Test connect mysql 2
-      run: sudo mysqladmin -u root -h 0.0.0.0 -P 3306 --protocol=tcp status 
+      run: sudo mysqladmin -u root -h 0.0.0.0 -P 3306 --protocol=TCP status 
     - name: Install dependencies
       run: |
         #sudo apt-get install MySQL-python python-ldap python-iso8601 python-dirq
