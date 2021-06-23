@@ -39,10 +39,12 @@ jobs:
     - name: docker ps
       run: |
         sudo docker ps
+        echo GET NAME
+        id=`sudo docker ps -q`
         echo LOGS
-        sudo docker logs mariadb
+        sudo docker logs $id
         echo IP ADDRESS
-        sudo docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' mariadb
+        sudo docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' $id
     - name: Test connect mysql 2
       run: sudo mysqladmin -u root -h 0.0.0.0 -P 3306 --protocol=TCP status 
     - name: Install dependencies
