@@ -34,7 +34,7 @@ jobs:
     #- name: Test connect mysql
     #  run: sudo mysqladmin -u root status
     - name: start mariadb
-      run: 
+      run: |
         sudo systemctl
         sudo systemctl start mariadb
     - name: Test connect mysql 2
