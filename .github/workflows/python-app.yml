@@ -17,7 +17,7 @@ jobs:
       with:
         python-version: 2.7 #, 3.7
     - name: Shutdown Ubuntu MySQL (SUDO)
-      run: sudo service mysql stop # Shutdown the Default MySQL, "sudo" is necessary, please not remove it
+      run: sudo systemctl start mysql.service
     - name: Setup MariaDB
       uses: getong/mariadb-action@v1.1
       with:
@@ -46,7 +46,7 @@ jobs:
         echo IP ADDRESS
         sudo docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' $id
     - name: Test connect mysql 2
-      run: sudo mysqladmin -u root -h 172.17.0.3 -P 3306 --protocol=TCP status 
+      run: sudo mysqladmin -u root -h 172.17.0.3 0.0.0.0 -P 3306 --protocol=TCP status 
     - name: Install dependencies
       run: |
         #sudo apt-get install MySQL-python python-ldap python-iso8601 python-dirq
