@@ -49,14 +49,17 @@ jobs:
     #  run: sudo mysql -u root -p root 
     #- name: Test connect mysql 2
     #  run: sudo mysqladmin -u root -h 172.17.0.3 0.0.0.0 -P 3306 --protocol=TCP status 
+    - name: Test connect mysql 2
+      run: ps -A
+    - name: Test connect mysql
+      run: mysql
     - name: Install MariaDB
       run: |
         sudo apt update
         sudo apt install mariadb-server
         #sudo mysql_secure_installation
-        #sudo systemctl start mariadb
-    - name: Test connect mysql
-      run: sudo mysql -u root <<< 'show databases;'
+        sudo systemctl start mariadb
+        sudo journalctl -xe --no-pager -u mariadb
     - name: Install dependencies
       run: |
         #sudo apt-get install MySQL-python python-ldap python-iso8601 python-dirq
