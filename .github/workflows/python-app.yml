@@ -57,7 +57,7 @@ jobs:
 
     - name: Check running 1
       run: | 
-        ps -A
+        ps -A | grep mysql -q
     #- name: Test connect mysql
     #  run: mysql
     - name: Install MariaDB
@@ -68,16 +68,18 @@ jobs:
         #sudo systemctl start mariadb
         #sudo journalctl -p 3 -xe --no-pager -u mariadb
     - name: Check running 2
-      run: ps -A | grep mysql
+      run: |
+        ps -A | grep mysql -q
     - name: setup mariadb databases
       run: |
         #sudo mariadb-install-db
-        #sudo mysql_install_db -defaults-file=~/.my.cnf
+        sudo mysql_install_db --print-defaults
+        sudo mysql_install_db --no-defaults
         #sudo /usr/sbin/mysqld --skip-grant-tables --general-log &
+    - name: Test connect mysql
+      run: |
         #sudo /usr/bin/mysql -u root mysql -h 127.0.0.1 <<< 'show tables;'
         sudo /usr/bin/mysql -u root mysql -h localhost -P 3306 --protocol=TCP status <<< 'show tables;'  
-    - name: Test connect mysql
-      run: mysql
     - name: Install dependencies
       run: |
         #sudo apt-get install MySQL-python python-ldap python-iso8601 python-dirq
