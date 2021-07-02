@@ -57,7 +57,7 @@ jobs:
 
     - name: Check running 1
       run: | 
-        ps -A | grep mysql -q
+        ps -A | grep mysql -q || true
     #- name: Test connect mysql
     #  run: mysql
     - name: Install MariaDB
@@ -69,7 +69,7 @@ jobs:
         #sudo journalctl -p 3 -xe --no-pager -u mariadb
     - name: Check running 2
       run: |
-        ps -A | grep mysql -q
+        ps -A | grep mysql -q || true
     - name: setup mariadb databases
       run: |
         #sudo mariadb-install-db
