@@ -57,7 +57,7 @@ jobs:
 
     - name: Check running 1
       run: | 
-        ps -A | grep adsfasdf
+        ps -A
     #- name: Test connect mysql
     #  run: mysql
     - name: Install MariaDB
