@@ -82,6 +82,7 @@ jobs:
       run: |
         #sudo /usr/bin/mysql -u root -h 127.0.0.1 <<< 'show tables;'
         sudo /usr/bin/mysql -u root -h localhost -P 3306 --protocol=TCP status <<< 'show tables;'  
+        sudo /usr/bin/mysql -u root -h 0.0.0.0 -P 3306 --protocol=TCP status <<< 'show tables;'  
     - name: Install dependencies
       run: |
         #sudo apt-get install MySQL-python python-ldap python-iso8601 python-dirq
