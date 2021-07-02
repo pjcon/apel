@@ -59,8 +59,10 @@ jobs:
         sudo apt install mariadb-server
         #sudo mysql_secure_installation
         #sudo systemctl start mariadb
-        sudo journalctl -p 3 -xe --no-pager -u mariadb
-        sudo mysql_install_db
+        #sudo journalctl -p 3 -xe --no-pager -u mariadb
+    - name: setup mariadb databases
+      run: |
+        sudo mariadb-install-db
     - name: Test connect mysql
       run: mysql
     - name: Install dependencies
