@@ -72,9 +72,16 @@ jobs:
         ps -A | grep mysql -q || true
     - name: setup mariadb databases
       run: |
+        sudo tee /etc/mysql.cnf << EOF
+        [mysqld_safe]
+        log_error=/var/log/mysql/mysql_error.log
+
+        [mysqld]
+        log_error=/var/log/mysql/mysql_error.log
+        EOF
         #sudo mariadb-install-db
         #sudo mysql_install_db --print-defaults
-        #sudo mysql_install_db --no-defaults || true
+        sudo mysql_install_db --no-defaults --defaults-file=/etc/mysql.cnf
         sudo /usr/sbin/mysqld --skip-grant-tables --general-log &
         sudo ls /var/lib/mysql
     - name: Test connect mysql
