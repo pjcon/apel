@@ -55,6 +55,8 @@ jobs:
         sudo apt install mariadb-server
         #sudo mysql_secure_installation
         #sudo systemctl start mariadb
+    - name: Test connect mysql
+      run: sudo mysql -u root <<< 'show databases;'
     - name: Install dependencies
       run: |
         #sudo apt-get install MySQL-python python-ldap python-iso8601 python-dirq
