@@ -49,6 +49,12 @@ jobs:
     #  run: sudo mysql -u root -p root 
     #- name: Test connect mysql 2
     #  run: sudo mysqladmin -u root -h 172.17.0.3 0.0.0.0 -P 3306 --protocol=TCP status 
+    - name: Remove mysql install
+      run: |
+        sudo apt-get remove --purge mysql*
+        sudo apt-get autoremove
+        sudo apt-get autoclean
+
     - name: Test connect mysql 2
       run: ps -A
     #- name: Test connect mysql
