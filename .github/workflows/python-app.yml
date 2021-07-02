@@ -73,10 +73,10 @@ jobs:
     - name: setup mariadb databases
       run: |
         #sudo mariadb-install-db
-        sudo mysql_install_db --print-defaults
-        sudo mysql_install_db --no-defaults || true
+        #sudo mysql_install_db --print-defaults
+        #sudo mysql_install_db --no-defaults || true
+        sudo /usr/sbin/mysqld --skip-grant-tables --general-log &
         sudo ls /var/lib/mysql
-        #sudo /usr/sbin/mysqld --skip-grant-tables --general-log &
     - name: Test connect mysql
       run: |
         #sudo /usr/bin/mysql -u root mysql -h 127.0.0.1 <<< 'show tables;'
