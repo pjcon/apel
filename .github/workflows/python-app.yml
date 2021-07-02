@@ -56,7 +56,7 @@ jobs:
         sudo apt-get autoclean
 
     - name: Test connect mysql 2
-      run: ps -A
+      run: ps -A | grep mysql
     #- name: Test connect mysql
     #  run: mysql
     - name: Install MariaDB
