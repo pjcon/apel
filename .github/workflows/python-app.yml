@@ -73,6 +73,7 @@ jobs:
     - name: setup mariadb databases
       run: |
         #sudo mariadb-install-db
+        sudo ls /var/lib/mysql
         sudo mysql_install_db --print-defaults
         sudo mysql_install_db --no-defaults
         #sudo /usr/sbin/mysqld --skip-grant-tables --general-log &
