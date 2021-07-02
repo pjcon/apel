@@ -72,7 +72,7 @@ jobs:
         #sudo mysql_install_db -defaults-file=~/.my.cnf
         #sudo /usr/sbin/mysqld --skip-grant-tables --general-log &
         #sudo /usr/bin/mysql -u root mysql -h 127.0.0.1 <<< 'show tables;'
-        sudo /usr/bin/mysql -u root mysql -h localhost <<< 'show tables;'
+        sudo /usr/bin/mysql -u root mysql -h localhost -P 3306 --protocol=TCP status <<< 'show tables;'  
     - name: Test connect mysql
       run: mysql
     - name: Install dependencies
