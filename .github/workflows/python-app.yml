@@ -68,7 +68,8 @@ jobs:
         #sudo journalctl -p 3 -xe --no-pager -u mariadb
     - name: setup mariadb databases
       run: |
-        sudo mariadb-install-db
+        #sudo mariadb-install-db
+        sudo mysql_install_db
     - name: Test connect mysql
       run: mysql
     - name: Install dependencies
