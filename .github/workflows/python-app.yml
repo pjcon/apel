@@ -51,8 +51,8 @@ jobs:
     #  run: sudo mysqladmin -u root -h 172.17.0.3 0.0.0.0 -P 3306 --protocol=TCP status 
     - name: Test connect mysql 2
       run: ps -A
-    - name: Test connect mysql
-      run: mysql
+    #- name: Test connect mysql
+    #  run: mysql
     - name: Install MariaDB
       run: |
         sudo apt update
