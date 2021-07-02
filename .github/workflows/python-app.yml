@@ -59,7 +59,7 @@ jobs:
         sudo apt install mariadb-server
         #sudo mysql_secure_installation
         #sudo systemctl start mariadb
-        sudo journalctl -xe --no-pager -u mariadb
+        sudo journalctl -p -xe --no-pager -u mariadb
     - name: Install dependencies
       run: |
         #sudo apt-get install MySQL-python python-ldap python-iso8601 python-dirq
