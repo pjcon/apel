@@ -70,8 +70,8 @@ jobs:
       run: |
         #sudo mariadb-install-db
         #sudo mysql_install_db -defaults-file=~/.my.cnf
-        /usr/sbin/mysqld --skip-grant-tables --general-log &
-        /usr/bin/mysql -u root mysql <<< 'show tables;'
+        sudo /usr/sbin/mysqld --skip-grant-tables --general-log &
+        sudo /usr/bin/mysql -u root mysql <<< 'show tables;'
     - name: Test connect mysql
       run: mysql
     - name: Install dependencies
