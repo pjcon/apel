@@ -16,7 +16,7 @@ jobs:
       uses: actions/setup-python@v2
       with:
         python-version: 2.7 #, 3.7
-    - name: Shutdown Ubuntu MySQL (SUDO)
+    - name: Start Ubuntu MySQL 
       run: sudo systemctl start mysql.service
     #- name: Setup MariaDB
     #  uses: getong/mariadb-action@v1.1
@@ -33,9 +33,9 @@ jobs:
     #    #mysql password: ${{ secrets.DatabasePassword }} # Required if "mysql user" exists. The password for the "mysql user"
     ##- name: Test connect mysql
     ##  run: sudo mysqladmin -u root status
-    - name: check ss 3306
-      run: |
-        sudo ss -ntp
+    #- name: check ss 3306
+    #  run: |
+    #    sudo ss -ntp
     #- name: docker ps
     #  run: |
     #    sudo docker ps
@@ -45,8 +45,10 @@ jobs:
     #    sudo docker logs $id
     #    echo IP ADDRESS
     #    sudo docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' $id
-    - name: Test connect mysql 2
-      run: sudo mysqladmin -u root -h 172.17.0.3 0.0.0.0 -P 3306 --protocol=TCP status 
+    - name: Test connect mysql
+      run: sudo mysql -u root 
+    #- name: Test connect mysql 2
+    #  run: sudo mysqladmin -u root -h 172.17.0.3 0.0.0.0 -P 3306 --protocol=TCP status 
     - name: Install dependencies
       run: |
         #sudo apt-get install MySQL-python python-ldap python-iso8601 python-dirq
