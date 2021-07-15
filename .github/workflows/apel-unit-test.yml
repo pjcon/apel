@@ -3,7 +3,7 @@
 
 name: Apel unit testing integration test
 
-on: [push, pull-request]
+on: [push, pull_request]
 
 jobs:
   apel-unit-test:
