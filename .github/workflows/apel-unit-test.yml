@@ -36,7 +36,7 @@ jobs:
         python-version: ${{ matrix.python-version }}
     
     - name: Test MariaDB connection
-      run: sudo mariadb -u root -h localhost -P 3306 <<< 'show tables;'
+      run: sudo mysql -u root -h localhost -P 3306 <<< 'show tables;'
 
     - name: Install dependencies
       run: |
