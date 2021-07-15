@@ -20,11 +20,11 @@ jobs:
         image: "mariadb:${{ matrix.mariadb-version }}"
         env:
           MYSQL_ALLOW_EMPTY_PASSWORD: yes
-          MYSQL_DATABASE: "apelunittest"
+          MYSQL_DATABASE: "apel_unittest"
           MYSQL_USER: "root"
           MYSQL_PASSWORD: ""
 
-        #options: --health-cmd="mysqladmin ping" --health-interval=5s --health-timeout=2s --health-retries=3
+        options: --health-cmd="mysqladmin ping" --health-interval=5s --health-timeout=2s --health-retries=3
         ports: ["3306:3306"]
 
     steps:
@@ -36,7 +36,7 @@ jobs:
         python-version: ${{ matrix.python-version }}
     
     - name: Test MariaDB connection
-      run: sudo mysql -u root -h localhost -P 3306 <<< 'show tables;'
+      run: sudo mysql -u root <<< 'show tables;'
 
     - name: Install dependencies
       run: |
