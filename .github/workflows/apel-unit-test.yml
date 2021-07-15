@@ -13,7 +13,7 @@ jobs:
     strategy:
       matrix:
         mariadb-version: ["10.3"]
-        python-version: ["2.7", "3.6"]
+        python-version: ["2.7"] #, "3.6"]
 
     services:
       mariadb:
