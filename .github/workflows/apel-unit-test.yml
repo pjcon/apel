@@ -28,6 +28,10 @@ jobs:
         ports: ["3306:3306"]
 
     steps:
+    # [ ] Cache docker containers/layers to speed up process
+    # - uses: actions/cache@v2
+    #   path: /var/lib/docker
+
     - uses: actions/checkout@v2
 
     - name: Set up Python ${{ matrix.python-version }}
