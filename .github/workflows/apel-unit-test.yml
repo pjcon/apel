@@ -36,7 +36,7 @@ jobs:
       run: hostname
 
     - name: Test MariaDB connection
-      run: sudo mysql --user root --host '172.18.0.1' <<< 'show tables;'
+      run: sudo mysql --user root --host '172.18.0.1' <<< 'show databases;'
 
     # [ ] Cache docker containers/layers to speed up process
     # - uses: actions/cache@v2
