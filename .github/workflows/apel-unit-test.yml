@@ -28,40 +28,48 @@ jobs:
         ports: ["3306:3306"]
 
     steps:
+
+    - name: Get IP
+      run: ip address
+    
+    - name: Get Hostname
+      run: hostname
+
+    - name: Test MariaDB connection
+      run: sudo mysql --user root --host '172.18.0.1' <<< 'show tables;'
+
     # [ ] Cache docker containers/layers to speed up process
     # - uses: actions/cache@v2
     #   path: /var/lib/docker
 
-    - uses: actions/checkout@v2
+    #- uses: actions/checkout@v2
 
-    - name: Set up Python ${{ matrix.python-version }}
-      uses: actions/setup-python@v2
-      with:
-        python-version: ${{ matrix.python-version }}
+    #- name: Set up Python ${{ matrix.python-version }}
+    #  uses: actions/setup-python@v2
+    #  with:
+    #    python-version: ${{ matrix.python-version }}
     
-    - name: Test MariaDB connection
-      run: sudo mysql -u root <<< 'show tables;'
 
-    - name: Install dependencies
-      run: |
-        # [ ] Cache
-        # Fix missing my_config.h for MySQL-python
-        sudo wget https://raw.githubusercontent.com/paulfitz/mysql-connector-c/master/include/my_config.h -P /usr/include/mysql/
-        
-        # [ ] Cache
-        # Fix missing lber.h for python-ldap
-        sudo apt-get install libsasl2-dev libldap2-dev libssl-dev
+    #- name: Install dependencies
+    #  run: |
+    #    # [ ] Cache
+    #    # Fix missing my_config.h for MySQL-python
+    #    sudo wget https://raw.githubusercontent.com/paulfitz/mysql-connector-c/master/include/my_config.h -P /usr/include/mysql/
+    #    
+    #    # [ ] Cache
+    #    # Fix missing lber.h for python-ldap
+    #    sudo apt-get install libsasl2-dev libldap2-dev libssl-dev
 
-        # [ ] Cache
-        python -m pip install --upgrade pip
-        if [ -f requirements.txt ]; then pip2 install -r requirements.txt; fi
-        if [ -f requirements-test.txt ]; then pip2 install -r requirements-test.txt; fi
+    #    # [ ] Cache
+    #    python -m pip install --upgrade pip
+    #    if [ -f requirements.txt ]; then pip2 install -r requirements.txt; fi
+    #    if [ -f requirements-test.txt ]; then pip2 install -r requirements-test.txt; fi
 
-    - name: Unittest with Coverage
-      run: |
-        export PYTHONPATH=$PYTHONPATH:`pwd -P`
-        cd test
-        coverage run --branch --source=apel,bin -m unittest2 discover --buffer
+    #- name: Unittest with Coverage
+    #  run: |
+    #    export PYTHONPATH=$PYTHONPATH:`pwd -P`
+    #    cd test
+    #    coverage run --branch --source=apel,bin -m unittest2 discover --buffer
 
-    - name: Coverage test with Codecov
-      run: codecov
+    #- name: Coverage test with Codecov
+    #  run: codecov
