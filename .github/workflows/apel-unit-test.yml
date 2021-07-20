@@ -55,8 +55,7 @@ jobs:
 
   run-coverage:
     needs: setup
-    strategy:
-      continue-on-error: true
+    continue-on-error: true
 
     steps:
     - name: test
@@ -66,8 +65,7 @@ jobs:
 
   run-codecov:
     needs: setup
-    strategy:
-      continue-on-error: true
+    continue-on-error: true
 
     steps:
     - name: test
