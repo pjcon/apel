@@ -35,7 +35,7 @@ class TestRepublish(unittest.TestCase):
         query = ("DROP DATABASE IF EXISTS apel_unittest;"
                  "CREATE DATABASE apel_unittest;")
 
-        call(["mysql", "-u", "root", "-e", query])
+        call(["mysql", "-u", "root", '-h', test_hostname, '-P', str(test_port), "-e", query])
 
         # Build a list of schema files for later loading.
         # For now, only add the cloud schema file.
@@ -50,7 +50,7 @@ class TestRepublish(unittest.TestCase):
         for schema_path in schema_path_list:
             with open(schema_path) as schema_file:
                 call(
-                    ["mysql", "-u", "root", "apel_unittest"],
+                    ["mysql", "-u", "root", '-h', test_hostname, '-P', str(test_port) "apel_unittest"],
                     stdin=schema_file
                 )
 
@@ -112,7 +112,7 @@ class TestRepublish(unittest.TestCase):
         """
         query = ("SELECT MeasurementTime FROM VCloudRecords;")
         mysql_process = Popen(
-            ["mysql", "-N", "-u", "root", "apel_unittest", "-e", query],
+            ["mysql", "-N", "-u", "root", '-h', test_hostname, '-P', str(test_port), "apel_unittest", "-e", query],
             stdin=PIPE, stdout=PIPE, stderr=PIPE
         )
         mysql_process.wait()

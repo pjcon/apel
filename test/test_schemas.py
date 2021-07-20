@@ -22,11 +22,11 @@ class SchemaTest(unittest.TestCase):
     def setUp(self):
         query = ('DROP DATABASE IF EXISTS apel_unittest;'
                  'CREATE DATABASE apel_unittest;')
-        call(['mysql', '-u', 'root', '-h', test_hostname, '-P', test_port, '-e', query])
+        call(['mysql', '-u', 'root', '-h', test_hostname, '-P', str(test_port), '-e', query])
 
     def tearDown(self):
         call(['mysql', '-u', 'root', '-h', test_hostname, 
-                    '-P', test_port, '-e', 'DROP DATABASE apel_unittest;'])
+                    '-P', str(test_port), '-e', 'DROP DATABASE apel_unittest;'])
 
 
 def make_schema_test(schema):
@@ -38,12 +38,12 @@ def make_schema_test(schema):
                                                               'server.sql'))
             parent_schema_handle = open(parent_schema_path)
             call(['mysql', '-u', 'root', '-h', test_hostname, 
-                    '-P', test_port, 'apel_unittest'], stdin=parent_schema_handle)
+                    '-P', str(test_port), 'apel_unittest'], stdin=parent_schema_handle)
             parent_schema_handle.close()
         schema_path = os.path.abspath(os.path.join('..', 'schemas', schema))
         schema_handle = open(schema_path)
         p = Popen(['mysql', '-u', 'root', '-h', test_hostname, 
-                    '-P', test_port, 'apel_unittest'], stdin=schema_handle, stderr=PIPE)
+                    '-P', str(test_port), 'apel_unittest'], stdin=schema_handle, stderr=PIPE)
         schema_handle.close()
         p.wait()
         self.assertFalse(p.returncode, p.communicate()[1])

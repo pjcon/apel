@@ -26,13 +26,13 @@ class MysqlTest(unittest.TestCase):
     def setUp(self):
         query = ('DROP DATABASE IF EXISTS apel_unittest;'
                  'CREATE DATABASE apel_unittest;')
-        subprocess.call(['mysql', '-u', 'root', '-h', test_hostname, '-P', test_port, '-e', query])
+        subprocess.call(['mysql', '-u', 'root', '-h', test_hostname, '-P', str(test_port), '-e', query])
 
 
         schema_path = os.path.abspath(os.path.join('..', 'schemas',
                                                    'server.sql'))
         schema_handle = open(schema_path)
-        subprocess.call(['mysql', '-u', 'root', '-h', test_hostname, '-P', test_port, 'apel_unittest'], stdin=schema_handle)
+        subprocess.call(['mysql', '-u', 'root', '-h', test_hostname, '-P', str(test_port), 'apel_unittest'], stdin=schema_handle)
         schema_handle.close()
 
         self.db = apel.db.apeldb.ApelDb('mysql', test_hostname, test_port, 'root', '',
@@ -101,7 +101,7 @@ class MysqlTest(unittest.TestCase):
         schema_path = os.path.abspath(os.path.join('..', 'schemas',
                                                    'cloud.sql'))
         schema_handle = open(schema_path)
-        subprocess.call(['mysql', '-u', 'root', 'apel_unittest'],
+        subprocess.call(['mysql', '-u', 'root', '-h', test_hostname, '-P', str(test_port), 'apel_unittest'],
                         stdin=schema_handle)
         schema_handle.close()
 
@@ -186,7 +186,7 @@ class MysqlTest(unittest.TestCase):
         schema_path = os.path.abspath(os.path.join('..', 'schemas',
                                                    'storage.sql'))
         schema_handle = open(schema_path)
-        subprocess.call(['mysql', '-u', 'root', '-h', test_hostname, '-P', test_port, 'apel_unittest'],
+        subprocess.call(['mysql', '-u', 'root', '-h', test_hostname, '-P', str(test_port), 'apel_unittest'],
                         stdin=schema_handle)
         schema_handle.close()
 
