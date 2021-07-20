@@ -40,24 +40,17 @@ jobs:
 
     - name: Get Date
       id: get-date
-      run: echo "::set-output name=date::$(/bin/date -u "+%Y%m%d")"
-      shell: bash
+      run: ::set-output name=date::$(/bin/date -u "+%Y%m%d")
 
-    - name: Display info
-      run: |
-        echo ${{ runner.os }}
-        echo ${{ steps.get-date.outputs.date }}
-
-    - uses: actions/cache@v1
+    - uses: actions/cache@v2
       with:
         path: ~/.cache/pip
-        key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements*.txt') }}
-        restore-keys: |
-          ${{ runner.os }}-pip-
+        key: ${{ runner.os }}-pip-${{ steps.get-date.outputs.date }}-${{ hashFiles('**/requirements*.txt') }}
 
     # - uses: actions/cache@v2
-    #   path: /var/lib/docker
-    #   key: ${{ runner.os }}-docker-${{ steps.get-date.outputs.date }}
+    #   with:
+    #     path: /var/lib/docker
+    #     key: ${{ runner.os }}-docker-${{ steps.get-date.outputs.date }}
 
     - name: Install dependencies
       if: steps.cache.outputs.cache-hit != 'true'
