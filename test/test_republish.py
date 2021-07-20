@@ -13,6 +13,17 @@ import apel.db.records
 if os.name == 'nt':
     os.environ['PATH'] += ';C:/Program Files/MySQL/MySQL Server 5.1/bin/'
 
+if 'APEL_TEST_HOSTNAME' in os.environ.keys():
+    test_hostname = os.environ['APEL_TEST_HOSTNAME' ]
+else:
+    test_hostname = 'localhost'
+
+if 'APEL_TEST_PORT' in os.environ.keys():
+    test_port = os.environ['APEL_TEST_PORT' ]
+else:
+    test_port = 3306
+
+
 
 class TestRepublish(unittest.TestCase):
     """This class contains tests for expected behaviour around republishing."""
@@ -46,7 +57,7 @@ class TestRepublish(unittest.TestCase):
     def test_cloud_republish(self):
         """Check that the last loaded record per month/VM is the one saved."""
         database = apel.db.apeldb.ApelDb(
-            "mysql", "localhost", 3306, "root", "", "apel_unittest"
+            "mysql", test_hostname,  test_port, "root", "", "apel_unittest"
         )
 
         # This will be used to generate records that only differ by the wall
