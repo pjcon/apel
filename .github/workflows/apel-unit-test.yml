@@ -38,6 +38,11 @@ jobs:
     - name: Test MariaDB connection
       run: sudo mysql --user root --host '172.18.0.1' <<< 'show databases;'
 
+    - name: Get Date
+      id: get-date
+      run: echo "::set-output name=date::$(/bin/date -u "+%Y%m%d")"
+      shell: bash
+
     - name: Display info
       run: |
         echo ${{ runner.os }}
