@@ -38,8 +38,10 @@ jobs:
     - name: Test MariaDB connection
       run: sudo mysql --user root --host '172.18.0.1' <<< 'show databases;'
 
-    - name: Give OS
-      run: echo ${{ runner.os }}
+    - name: Display info
+      run: |
+        echo ${{ runner.os }}
+        echo ${{ steps.get-date.outputs.date }}
 
     - uses: actions/cache@v1
       with:
