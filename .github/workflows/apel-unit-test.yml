@@ -52,10 +52,10 @@ jobs:
         # Fix missing lber.h for python-ldap
         sudo apt-get install libsasl2-dev libldap2-dev libssl-dev
 
-    #    # [ ] Cache
-    #    python -m pip install --upgrade pip
-    #    if [ -f requirements.txt ]; then pip2 install -r requirements.txt; fi
-    #    if [ -f requirements-test.txt ]; then pip2 install -r requirements-test.txt; fi
+        # [ ] Cache
+        python -m pip install --upgrade pip
+        if [ -f requirements.txt ]; then pip2 install -r requirements.txt; fi
+        if [ -f requirements-test.txt ]; then pip2 install -r requirements-test.txt; fi
 
     #- name: Unittest with Coverage
     #  run: |
