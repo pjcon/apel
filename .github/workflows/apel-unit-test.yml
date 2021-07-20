@@ -42,16 +42,11 @@ jobs:
       id: get-date
       run: echo "::set-output name=date::$(/bin/date -u "+%Y%m%d")"
 
+      # Matches today's cache and unchanged requirements files
     - uses: actions/cache@v2
       with:
         path: ~/.cache/pip
-        key: pip-cache
-        restore-keys: pip-cache
-
-    # - uses: actions/cache@v2
-    #   with:
-    #     path: /var/lib/docker
-    #     key: ${{ runner.os }}-docker-${{ steps.get-date.outputs.date }}
+        key: ${{ runner.os }}-pip-${{ steps.get-date.outputs.date }}-${{ hashFiles('**/requirements*.txt') }}
 
     - name: Install dependencies
       if: steps.cache.outputs.cache-hit != 'true'
