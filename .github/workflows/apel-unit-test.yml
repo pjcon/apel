@@ -38,19 +38,22 @@ jobs:
     - name: Test MariaDB connection
       run: sudo mysql --user root --host '172.18.0.1' <<< 'show databases;'
 
-    # [ ] Cache docker containers/layers to speed up process
+    - name: Give OS
+      run: echo ${{ runner.os }}
+
+    - uses: actions/cache@v1
+      with:
+        path: ~/.cache/pip
+        key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements*.txt') }}
+        restore-keys: |
+          ${{ runner.os }}-pip-
+
     # - uses: actions/cache@v2
     #   path: /var/lib/docker
-
-    #- uses: actions/cache@v1
-    #  with:
-    #    path: ~/.cache/pip
-    #    key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements*.txt') }}
-    #    restore-keys: |
-    #      ${{ runner.os }}-pip-
+    #   key: ${{ runner.os }}-docker-${{ steps.get-date.outputs.date }}
 
     - name: Install dependencies
-      #if: steps.cache.outputs.cache-hit != 'true'
+      if: steps.cache.outputs.cache-hit != 'true'
       run: .github/actions/install_dependencies.sh
 
     - name: Unittest with Coverage
