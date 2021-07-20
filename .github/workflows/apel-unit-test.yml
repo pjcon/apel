@@ -6,8 +6,8 @@ name: Apel unit testing integration test
 on: [push, pull_request]
 
 jobs:
-  apel-unit-test:
-    name: "Apel unit test using MariaDB: ${{ matrix.mariadb-version }} Python:${{ matrix.python-version }}"
+  python-MariaDB-setup:
+    name: "MariaDB: ${{ matrix.mariadb-version }} Python:${{ matrix.python-version }}"
     runs-on: ubuntu-latest
 
     strategy:
@@ -38,22 +38,39 @@ jobs:
     - name: Test MariaDB connection
       run: sudo mysql --user root --host '172.18.0.1' <<< 'show databases;'
 
-    - name: Get Date
-      id: get-date
-      run: echo "::set-output name=date::$(/bin/date -u "+%Y%m%d")"
+    #- name: Get Date
+    #  id: get-date
+    #  run: echo "::set-output name=date::$(/bin/date -u "+%Y%m%d")"
 
-      # Matches today's cache and unchanged requirements files
-    - uses: actions/cache@v2
-      with:
-        path: ~/.cache/pip
-        key: ${{ runner.os }}-pip-${{ steps.get-date.outputs.date }}-${{ hashFiles('**/requirements*.txt') }}
+    #  # Matches today's cache and unchanged requirements files
+    #- uses: actions/cache@v2
+    #  with:
+    #    path: ~/.cache/pip
+    #    key: ${{ runner.os }}-pip-${{ steps.get-date.outputs.date }}-${{ hashFiles('**/requirements*.txt') }}
 
+  
     - name: Install dependencies
       if: steps.cache.outputs.cache-hit != 'true'
       run: .github/actions/install_dependencies.sh
 
-    - name: Unittest with Coverage
-      run: .github/actions/run_tests.sh
+  run-coverage:
+    needs: setup
+    strategy:
+      continue-on-error: true
 
+    steps:
+    - name: test
+      run: echo coverage
+    #- name: Unittest with Coverage
+    #  run: .github/actions/run_tests.sh
+
+  run-codecov:
+    needs: setup
+    strategy:
+      continue-on-error: true
+
+    steps:
+    - name: test
+      run: echo codecov
     #- name: Coverage test with Codecov
     #  run: codecov
