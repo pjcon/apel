@@ -40,12 +40,13 @@ jobs:
 
     - name: Get Date
       id: get-date
-      run: ::set-output name=date::$(/bin/date -u "+%Y%m%d")
+      run: echo "::set-output name=date::$(/bin/date -u "+%Y%m%d")"
 
     - uses: actions/cache@v2
       with:
         path: ~/.cache/pip
-        key: ${{ runner.os }}-pip-${{ steps.get-date.outputs.date }}-${{ hashFiles('**/requirements*.txt') }}
+        key: ${{ runner.os }}-pip-${{ steps.get-date.outputs.date }}
+        restore-keys: ${{ runner.os }}-pip-${{ steps.get-date.outputs.date }}
 
     # - uses: actions/cache@v2
     #   with:
