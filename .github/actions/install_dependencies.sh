@@ -1,7 +1,7 @@
 #!/bin/env bash
 
 # Ubuntu specific dependencies
-if grep Ubuntu /etc/os-release &> /dev/null;
+if grep Ubuntu /etc/os-release &> /dev/null; then
 
     # Fix missing my_config.h for MySQL-python
     sudo wget https://raw.githubusercontent.com/paulfitz/mysql-connector-c/master/include/my_config.h -P /usr/include/mysql/
