@@ -10,12 +10,12 @@ import apel.db.records
 if os.name == 'nt':
     os.environ['PATH'] += ';C:/Program Files/MySQL/MySQL Server 5.1/bin/'
 
-if 'APEL_TEST_HOSTNAME' in os.environ.keys:
+if 'APEL_TEST_HOSTNAME' in os.environ.keys():
     test_hostname = os.environ['APEL_TEST_HOSTNAME' ]
 else:
     test_hostname = 'localhost'
 
-if 'APEL_TEST_PORT' in os.environ.keys:
+if 'APEL_TEST_PORT' in os.environ.keys():
     test_port = os.environ['APEL_TEST_PORT' ]
 else:
     test_port = 3306
