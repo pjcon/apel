@@ -50,7 +50,7 @@ class TestRepublish(unittest.TestCase):
         for schema_path in schema_path_list:
             with open(schema_path) as schema_file:
                 call(
-                    ["mysql", "-u", "root", '-h', test_hostname, '-P', str(test_port) "apel_unittest"],
+                    ["mysql", "-u", "root", '-h', test_hostname, '-P', str(test_port), "apel_unittest"],
                     stdin=schema_file
                 )
 

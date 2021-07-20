@@ -9,7 +9,6 @@ jobs:
   python-MariaDB-setup:
     name: "MariaDB: ${{ matrix.mariadb-version }} Python:${{ matrix.python-version }}"
     runs-on: ubuntu-latest
-    continue-on-error: true
     strategy:
       matrix:
         mariadb-version: ["10.3"]
@@ -56,7 +55,9 @@ jobs:
       run: .github/actions/install_dependencies.sh
 
     - name: Unittest with Coverage
+      continue-on-error: true
       run: .github/actions/run_coverage.sh
 
     - name: Coverage test with Codecov
+      continue-on-error: true
       run: .github/actions/run_codecov.sh
