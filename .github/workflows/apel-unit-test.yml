@@ -9,7 +9,7 @@ jobs:
   python-MariaDB-setup:
     name: "MariaDB: ${{ matrix.mariadb-version }} Python:${{ matrix.python-version }}"
     runs-on: ubuntu-latest
-
+    continue-on-error: true
     strategy:
       matrix:
         mariadb-version: ["10.3"]
@@ -38,6 +38,9 @@ jobs:
     - name: Test MariaDB connection
       run: sudo mysql --user root --host '172.18.0.1' <<< 'show databases;'
 
+    # Cannot access cache from non-default branch
+    # https://github.community/t/actions-cache-cache-not-being-hit-despite-of-being-present/17956
+
     #- name: Get Date
     #  id: get-date
     #  run: echo "::set-output name=date::$(/bin/date -u "+%Y%m%d")"
@@ -48,27 +51,12 @@ jobs:
     #    path: ~/.cache/pip
     #    key: ${{ runner.os }}-pip-${{ steps.get-date.outputs.date }}-${{ hashFiles('**/requirements*.txt') }}
 
-  
     - name: Install dependencies
       if: steps.cache.outputs.cache-hit != 'true'
       run: .github/actions/install_dependencies.sh
 
-  run-coverage:
-    needs: setup
-    continue-on-error: true
+    - name: Unittest with Coverage
+      run: .github/actions/run_coverage.sh
 
-    steps:
-    - name: test
-      run: echo coverage
-    #- name: Unittest with Coverage
-    #  run: .github/actions/run_tests.sh
-
-  run-codecov:
-    needs: setup
-    continue-on-error: true
-
-    steps:
-    - name: test
-      run: echo codecov
-    #- name: Coverage test with Codecov
-    #  run: codecov
+    - name: Coverage test with Codecov
+      run: .github/actions/run_codecov.sh
