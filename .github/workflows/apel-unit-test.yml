@@ -45,8 +45,8 @@ jobs:
     - uses: actions/cache@v2
       with:
         path: ~/.cache/pip
-        key: ${{ runner.os }}-pip-${{ steps.get-date.outputs.date }}
-        restore-keys: ${{ runner.os }}-pip-
+        key: pip-cache
+        restore-keys: pip-cache
 
     # - uses: actions/cache@v2
     #   with:
