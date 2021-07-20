@@ -10,6 +10,16 @@ import apel.db.records
 if os.name == 'nt':
     os.environ['PATH'] += ';C:/Program Files/MySQL/MySQL Server 5.1/bin/'
 
+if 'APEL_TEST_HOSTNAME' in os.environ.keys:
+    test_hostname = os.environ['APEL_TEST_HOSTNAME' ]
+else:
+    test_hostname = 'localhost'
+
+if 'APEL_TEST_PORT' in os.environ.keys:
+    test_port = os.environ['APEL_TEST_PORT' ]
+else:
+    test_port = 3306
+
 
 class MysqlTest(unittest.TestCase):
     # These test cases require a local MySQL db server with no password on root
@@ -24,7 +34,7 @@ class MysqlTest(unittest.TestCase):
         subprocess.call(['mysql', '-u', 'root', 'apel_unittest'], stdin=schema_handle)
         schema_handle.close()
 
-        self.db = apel.db.apeldb.ApelDb('mysql', 'localhost', 3306, 'root', '',
+        self.db = apel.db.apeldb.ApelDb('mysql', test_hostname, test_port, 'root', '',
                                         'apel_unittest')
 
     # This method seems to run really slowly on Travis CI
@@ -39,7 +49,7 @@ class MysqlTest(unittest.TestCase):
     def test_bad_connection(self):
         """Check that initialising ApelDb fails if a bad password is used."""
         self.assertRaises(apel.db.apeldb.ApelDbException, apel.db.apeldb.ApelDb,
-                          'mysql', 'localhost', 3306, 'root', 'badpassword',
+                          'mysql', test_hostname, test_port, 'root', 'badpassword',
                           'apel_badtest')
 
     def test_lost_connection(self):
